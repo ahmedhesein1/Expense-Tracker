@@ -19,7 +19,8 @@ export const globalErrorHandler = (
 
   res.status(statusCode).json({
     success: false,
-    message,
-    stack
+    statusCode,
+    message:err.message,
+    stack:err.stack
   });
 };

@@ -11,13 +11,14 @@ const app: Express = express();
 app.use(express.json());
 app.use(cors());
 
+app.use('/auth', authRoutes);
+app.use(globalErrorHandler);
 const port = process.env.PORT || 3000;
 const initializeDatabase = async () => {
   try {
     // await createDatabase();
     await AppDataSource.initialize();
     console.log('✅ Database initialized');
-    app.use('/auth', authRoutes);
     app.listen(port, () => {
       console.log(`🚀 Server running on port ${port}`);
     });
@@ -29,5 +30,4 @@ const initializeDatabase = async () => {
     process.exit(1);
   }
 };
-app.use(globalErrorHandler);
 initializeDatabase();
