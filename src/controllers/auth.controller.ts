@@ -84,18 +84,26 @@ class AuthController {
         return next(
           new AppError('All fields are required', 400),
         );
-      const user = await this.userRepository.findOneBy({
-        email,
-      });
+      const user: User | null =
+        await this.userRepository.findOne({
+          where: { email },
+          select: ['id', 'email', 'password'],
+        });
+
       if (!user)
         return next(new AppError('User Not Found', 400));
-      const isMatched = await bcrypt.compare(
+      if (!user.password) {
+        return next(
+          new AppError('User password not set', 500),
+        );
+      }
+      const isMatched: boolean = await bcrypt.compare(
         password,
         user.password,
       );
       if (!isMatched)
         return next(
-          new AppError('Invalid Credentials', 400),
+          new AppError('Invalid Credentials', 401),
         );
       const token = this.generateToken(user.id);
       res.cookie('token', token, {
