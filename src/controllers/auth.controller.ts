@@ -166,9 +166,15 @@ class AuthController {
       res: Response,
       next: NextFunction,
     ) => {
-      const user = await this.userRepository.findOneBy({
-        id: req.params.id,
-      });
+      const loggedInUser = req.user?.id;
+      const requestedUserId = req.params.id;
+      if(loggedInUser !== requestedUserId) return next(
+        new AppError(
+          'Unauthorized: You can only access your own data',
+          403,
+        ),
+      );
+      const user = await this.userRepository.findOne({where:{id:requestedUserId}});
       if (!user)
         return next(new AppError('User Not Found', 404));
       res.status(200).json({
