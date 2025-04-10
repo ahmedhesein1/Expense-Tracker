@@ -1,11 +1,13 @@
 import { Exclude } from 'class-transformer';
 import {
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Income } from './income.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
@@ -25,7 +27,7 @@ export class User {
   @Column({
     type: 'varchar',
     length: 225,
-    select:false
+    select: false,
   })
   @Exclude()
   password: string;
@@ -35,6 +37,8 @@ export class User {
     default: null,
   })
   profileImageUrl: string;
+  @OneToMany(() => Income, (income) => income.user)
+  incomes: Income[];
   @CreateDateColumn()
   createdAt: string;
   @UpdateDateColumn()
