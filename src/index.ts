@@ -5,6 +5,7 @@ import { AppDataSource } from './config/db';
 import cors from 'cors';
 import { globalErrorHandler } from './middleware/globalErrorHandler';
 import { authRoutes } from './routes/auth.routes';
+import { incomeRoutes } from './routes/income.routes';
 import path from 'path';
 
 dotenv.config();
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 app.use('/auth', authRoutes);
+app.use('/income', incomeRoutes);
 app.use(globalErrorHandler);
 
 const port = process.env.PORT || 3000;
