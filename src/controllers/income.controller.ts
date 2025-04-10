@@ -46,9 +46,11 @@ class IncomeController {
       res: Response,
       next: NextFunction,
     ) => {
+      const userId = req.user?.id;
       const incomes = await this.incomeRepository.find({
+        where: { user: { id: userId } },
         order: {
-          createdAt: 'ASC',
+          createdAt: 'DESC',
         },
       });
       if (!incomes)
