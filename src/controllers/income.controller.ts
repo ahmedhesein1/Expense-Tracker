@@ -63,5 +63,39 @@ class IncomeController {
       });
     },
   );
+
+  public deleteIncome = asyncHandler(
+    async (
+      req: Request,
+      res: Response,
+      next: NextFunction,
+    ) => {
+      const userId = req.user?.id;
+      const incomeId = parseInt(req.params.id);
+      if (!userId)
+        return next(
+          new AppError('You are not Authorized', 401),
+        );
+      const income: Income | null =
+        await this.incomeRepository.findOne({
+          where: {
+            id: incomeId,
+            user: { id: userId },
+          },
+        });
+      if (!income)
+        return next(
+          new AppError(
+            'You are not Authorized or Income not found',
+            404,
+          ),
+        );
+      await this.incomeRepository.remove(income);
+      res.status(200).json({
+        success: true,
+        message: 'Income deleted successfully',
+      });
+    },
+  );
 }
 export const incomeController = new IncomeController();
