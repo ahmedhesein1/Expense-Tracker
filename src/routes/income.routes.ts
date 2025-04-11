@@ -14,3 +14,8 @@ incomeRoutes.get(
   authController.protect,
   incomeController.getAllIncomes,
 );
+incomeRoutes.delete(
+  '/:id',
+  authController.protect,
+  incomeController.deleteIncome,
+);
