@@ -6,6 +6,7 @@ import cors from 'cors';
 import { globalErrorHandler } from './middleware/globalErrorHandler';
 import { authRoutes } from './routes/auth.routes';
 import { incomeRoutes } from './routes/income.routes';
+import { expenseRoutes } from './routes/expense.routes';
 import path from 'path';
 
 dotenv.config();
@@ -23,6 +24,7 @@ app.use(cookieParser());
 app.use(cors());
 app.use('/auth', authRoutes);
 app.use('/income', incomeRoutes);
+app.use('/expense',expenseRoutes);
 app.use(globalErrorHandler);
 
 const port = process.env.PORT || 3000;
