@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Income } from './income.entity';
+import { Expense } from './expense.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
@@ -39,6 +40,8 @@ export class User {
   profileImageUrl: string;
   @OneToMany(() => Income, (income) => income.user)
   incomes: Income[];
+  @OneToMany(()=> Expense,(expense)=> expense.user)
+  expenses: Expense[];
   @CreateDateColumn()
   createdAt: string;
   @UpdateDateColumn()

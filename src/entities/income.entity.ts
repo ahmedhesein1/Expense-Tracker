@@ -27,11 +27,11 @@ export class Income {
   source: string;
   @Column({
     type: 'decimal',
-    precision:10,
-    scale:2,
+    precision: 10,
+    scale: 2,
     nullable: false,
   })
-  amount:number ;
+  amount: number;
   @Column({
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
