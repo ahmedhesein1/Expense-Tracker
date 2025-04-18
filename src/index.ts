@@ -8,12 +8,11 @@ import { authRoutes } from './routes/auth.routes';
 import { incomeRoutes } from './routes/income.routes';
 import { expenseRoutes } from './routes/expense.routes';
 import path from 'path';
+import { dashboardRoutes } from './routes/dashboard.routes';
 
 dotenv.config();
 const app: Express = express();
 
-// CHANGED: Updated static file path to point to correct uploads directory
-// Now uses '../uploads' since __dirname points to 'dist' or 'src' folder at runtime
 app.use(
   '/uploads',
   express.static(path.join(__dirname, '../uploads')), // Serve from project root/uploads
@@ -25,6 +24,7 @@ app.use(cors());
 app.use('/auth', authRoutes);
 app.use('/income', incomeRoutes);
 app.use('/expense',expenseRoutes);
+app.use('/dashboard', dashboardRoutes);
 app.use(globalErrorHandler);
 
 const port = process.env.PORT || 3000;
